@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
 import { Button } from "../Button";
+import { v4 as uuid } from "uuid";
 
 const CreateQuestions: React.FC<CreateQuestionsProps> = () => {
   const [inputValue, setInputValue] = useState<{
@@ -10,8 +13,24 @@ const CreateQuestions: React.FC<CreateQuestionsProps> = () => {
     answer: "",
   });
 
-  const handleSubmit = useCallback(() => {}, []);
+  const dispatch = useDispatch();
 
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>): void => {
+      event.preventDefault();
+
+      dispatch(
+        addQuestionAndAnswer({
+          id: uuid(),
+          question: inputValue.question,
+          answer: inputValue.answer,
+        })
+      );
+      // Clear the form after submit and close the modal
+      setInputValue({ question: "", answer: "" });
+    },
+    [dispatch, inputValue.answer, inputValue.question]
+  );
   return (
     <>
       <div style={{ margin: "40px" }}>
