@@ -8,8 +8,12 @@ describe("<CreateQuestion />", () => {
   it("should dispatch the input values and save them in store", async () => {
     renderWithProvider(<CreateQuestion />);
 
-    const questionInput = screen.getByLabelText("Question") as HTMLInputElement;
-    const answerInput = screen.getByLabelText("Answer") as HTMLInputElement;
+    const triggerModalButton = screen.getByText("Create question");
+
+    fireEvent.click(triggerModalButton);
+
+    const questionInput = screen.getByLabelText<HTMLInputElement>("Question");
+    const answerInput = screen.getByLabelText<HTMLInputElement>("Answer");
     const submitButton = screen.getByText("Submit");
 
     fireEvent.change(questionInput, {
@@ -40,7 +44,10 @@ describe("<CreateQuestion />", () => {
     // Clear the form after clicking on submit
     fireEvent.click(submitButton);
 
-    expect(questionInput.value).toBe("");
-    expect(answerInput.value).toBe("");
+    // Reopen the modal
+    fireEvent.click(triggerModalButton);
+
+    expect(screen.getByLabelText<HTMLInputElement>("Question").value).toBe("");
+    expect(screen.getByLabelText<HTMLInputElement>("Answer").value).toBe("");
   });
 });
