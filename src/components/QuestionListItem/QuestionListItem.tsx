@@ -14,6 +14,9 @@ import {
   faPenToSquare,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import QuestionListItemWrapper from "./components/QuestionListItemWrapper";
+import { Heading } from "../Heading";
+import QuestionItemActionsWrapper from "./components/QuestionItemActionsWrapper";
 
 const QuestionListItem: React.FC<QuestionListItemProps> = ({
   content,
@@ -68,30 +71,29 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
   };
 
   return (
-    <div
-      style={{
-        border: "2px solid black",
-        margin: "8px",
-        borderRadius: "10px",
-        maxHeight: "400px",
-        padding: "10px",
-      }}
-    >
-      <div style={{ display: "flex" }}>
-        <span>{title}</span>
-        <div style={{ marginLeft: "auto" }}>
+    <QuestionListItemWrapper>
+      <QuestionItemActionsWrapper>
+        <Heading headingLevel='h4'>{title}</Heading>
+        <div>
           <Button
             aria-label='Edit button'
+            variant='icon'
             type='button'
             onClick={(): void => setModalOpen(!modalOpen)}
           >
             <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
-          <Button aria-label='Delete button' type='button' onClick={deleteItem}>
+          <Button
+            aria-label='Delete button'
+            variant='icon'
+            type='button'
+            onClick={deleteItem}
+          >
             <FontAwesomeIcon icon={faXmark} />
           </Button>
           <Button
             aria-label={expanded ? "Expand button" : "Collapse button"}
+            variant='icon'
             type='button'
             onClick={(): void => setExpanded(!expanded)}
           >
@@ -102,7 +104,7 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
             )}
           </Button>
         </div>
-      </div>
+      </QuestionItemActionsWrapper>
       {expanded && <div>{content}</div>}
       {modalOpen && (
         <Modal
@@ -149,7 +151,7 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
           </form>
         </Modal>
       )}
-    </div>
+    </QuestionListItemWrapper>
   );
 };
 

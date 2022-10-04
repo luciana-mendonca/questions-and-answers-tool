@@ -3,19 +3,41 @@ import styled, { css } from "styled-components";
 
 const Button = styled.button<ButtonProps>(
   ({ variant = "primary" }) => css`
-    background-color: pink;
-    border: none;
-    border-radius: 20px;
+    background-color: transparent;
+    border: 2px solid #2f3e4e;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 700;
-    padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+    padding: 8px 10px;
+
+    svg {
+      height: 20px;
+      width: 24px;
+    }
 
     &:hover {
-      background-color: violet;
+      background-color: #e2effd;
     }
     &:focus {
-      outline: 2px solid yellow;
+      border: 2px solid #3092fa;
+      outline-color: #3092fa;
     }
+
+    ${variant === "danger" &&
+    css`
+      background-color: #b81414;
+      border: 2px solid transparent;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #ad1515;
+      }
+
+      &:focus {
+        border: 2px solid #ad1515;
+        outline-color: #2f3e4e;
+      }
+    `}
   `
 );
 

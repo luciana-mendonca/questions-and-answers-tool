@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Portal } from "../Portal";
 import TooltipContainer from "./components/TooltipContainer";
 import TooltipWrapper from "./components/TooltipWrapper";
 
@@ -57,15 +56,14 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content }) => {
     >
       {children}
       {active && (
-        // <Portal>
         <TooltipContainer
           ref={tooltipRef}
+          role='tooltip'
           left={position.left}
           top={position.top}
         >
           {content}
         </TooltipContainer>
-        // </Portal>
       )}
     </TooltipWrapper>
   );

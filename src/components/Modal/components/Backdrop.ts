@@ -8,7 +8,7 @@ const Backdrop = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
-  z-index: 0;
+  z-index: 2;
 `;
 
 export default Backdrop;

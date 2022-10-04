@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const EmptyState = styled.div`
-  background-color: pink;
+  background-color: #e2effd;
   border-radius: 4px;
   font-weight: 600;
   margin: 10px;
