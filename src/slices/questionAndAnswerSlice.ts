@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
 import { RootState } from "../app/store";
 import { QuestionAndAnswerState, QuestionAndAnswer } from "../types";
 
@@ -16,6 +17,10 @@ export const questionAndAnswerSlice = createSlice({
     ) => {
       state.list.push(action.payload);
     },
+    clearList: () => {
+      storage.removeItem("persist:root");
+      return initialState;
+    },
     deleteQuestionAndAnswer: (
       state: QuestionAndAnswerState,
       action: PayloadAction<QuestionAndAnswer>
@@ -29,7 +34,7 @@ export const selectQuestionsAndAnswers = (
   state: RootState
 ): QuestionAndAnswer[] => state.list;
 
-export const { addQuestionAndAnswer, deleteQuestionAndAnswer } =
+export const { addQuestionAndAnswer, clearList, deleteQuestionAndAnswer } =
   questionAndAnswerSlice.actions;
 
 export default questionAndAnswerSlice.reducer;

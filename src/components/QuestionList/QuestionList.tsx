@@ -1,20 +1,35 @@
 import React from "react";
-import { useSelector, shallowEqual } from "react-redux";
-import { selectQuestionsAndAnswers } from "../../slices/questionAndAnswerSlice";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import {
+  clearList,
+  selectQuestionsAndAnswers,
+} from "../../slices/questionAndAnswerSlice";
 import { QuestionAndAnswer } from "../../types";
+import { Button } from "../Button";
 import { QuestionListItem } from "../QuestionListItem";
 
 const QuestionsList: React.FC<QuestionsListProps> = () => {
+  const dispatch = useDispatch();
+
   // Get questions from the store
   const questionAndAnswerList = useSelector(
     selectQuestionsAndAnswers,
     shallowEqual
   );
 
+  // Delete all questions from local storage and remove from the view
+  const deleteAllQuestionsAndAnswers = (): void => {
+    dispatch(clearList());
+  };
+
   return (
     <div
       style={{ outline: "1px solid black", margin: "10px", padding: "10px" }}
     >
+      <h2>Created questions</h2>
+      <Button type='button' onClick={deleteAllQuestionsAndAnswers}>
+        Delete all questions
+      </Button>
       {questionAndAnswerList?.map((item: QuestionAndAnswer) => {
         return (
           <QuestionListItem
