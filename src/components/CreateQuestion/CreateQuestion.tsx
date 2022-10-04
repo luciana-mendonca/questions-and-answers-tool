@@ -42,6 +42,7 @@ const CreateQuestion: React.FC<CreateQuestionProps> = () => {
       {modalOpen && (
         <Modal
           modalTitle='Add a new question and answer'
+          modalTitleTooltipContent='Here you can create new questions and their answers.'
           isOpen={modalOpen}
           setModalOpen={() => setModalOpen(!modalOpen)}
         >
