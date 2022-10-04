@@ -14,7 +14,7 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
     <div
       style={{ outline: "1px solid black", margin: "10px", padding: "10px" }}
     >
-      {questionAndAnswerList.map((item: QuestionAndAnswer) => {
+      {questionAndAnswerList?.map((item: QuestionAndAnswer) => {
         return (
           <div key={item.id}>
             <div>{item.question}</div>
