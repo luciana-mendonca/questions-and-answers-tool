@@ -14,8 +14,9 @@ import {
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import { Heading } from "../Heading";
+import { Tooltip } from "../Tooltip";
 
-const QuestionsList: React.FC<QuestionsListProps> = () => {
+const QuestionList: React.FC<QuestionListProps> = () => {
   const [sortQuestions, setSortQuestions] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -43,7 +44,9 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
     >
       <div style={{ display: "flex" }}>
         <Heading headingLevel='h2'>Created questions</Heading>
-        <FontAwesomeIcon icon={faCircleInfo} />
+        <Tooltip content='Here you can find the created questions and their answers.'>
+          <FontAwesomeIcon icon={faCircleInfo} />
+        </Tooltip>
       </div>
       <Button
         aria-label='Sort button alphabetically'
@@ -59,7 +62,7 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
       <Button type='button' onClick={deleteAllQuestionsAndAnswers}>
         Delete all questions
       </Button>
-      {list?.map((item: QuestionAndAnswer) => {
+      {list.map((item: QuestionAndAnswer) => {
         return (
           <QuestionListItem
             key={item.id}
@@ -73,6 +76,6 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
   );
 };
 
-export interface QuestionsListProps {}
+export interface QuestionListProps {}
 
-export default QuestionsList;
+export default QuestionList;
