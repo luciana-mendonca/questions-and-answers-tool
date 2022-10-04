@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { selectQuestionsAndAnswers } from "../../slices/questionAndAnswerSlice";
 import { QuestionAndAnswer } from "../../types";
+import { QuestionListItem } from "../QuestionListItem";
 
 const QuestionsList: React.FC<QuestionsListProps> = () => {
   // Get questions from the store
@@ -16,10 +17,12 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
     >
       {questionAndAnswerList?.map((item: QuestionAndAnswer) => {
         return (
-          <div key={item.id}>
-            <div>{item.question}</div>
-            <div>{item.answer}</div>
-          </div>
+          <QuestionListItem
+            key={item.id}
+            id={item.id}
+            title={item.question}
+            content={item.answer}
+          />
         );
       })}
     </div>
