@@ -1,12 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
 import { QuestionAndAnswer } from "../../types";
 import { Button } from "../Button";
 
 const QuestionListItem: React.FC<QuestionListItemProps> = ({
   content,
+  id,
   title,
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  // Delete the current selected item of the question list
+  const deleteItem = () => {
+    dispatch(
+      deleteQuestionAndAnswer({
+        id: id,
+        question: title,
+        answer: content,
+      })
+    );
+  };
 
   return (
     <div
@@ -21,7 +36,9 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
       <div style={{ display: "flex" }}>
         <span>{title}</span>
         <div style={{ marginLeft: "auto" }}>
-          <Button type='button'>Delete</Button>
+          <Button type='button' onClick={deleteItem}>
+            Delete
+          </Button>
           <Button type='button' onClick={(): void => setExpanded(!expanded)}>
             Expand
           </Button>
