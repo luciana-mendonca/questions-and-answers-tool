@@ -5,7 +5,7 @@ import { Modal } from "../Modal";
 import { v4 as uuid } from "uuid";
 import { addQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
 
-const CreateQuestions: React.FC<CreateQuestionsProps> = () => {
+const CreateQuestion: React.FC<CreateQuestionProps> = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<{
     question: string;
@@ -89,6 +89,6 @@ const CreateQuestions: React.FC<CreateQuestionsProps> = () => {
   );
 };
 
-export interface CreateQuestionsProps {}
+export interface CreateQuestionProps {}
 
-export default CreateQuestions;
+export default CreateQuestion;

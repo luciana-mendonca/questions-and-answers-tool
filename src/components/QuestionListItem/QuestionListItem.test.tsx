@@ -26,7 +26,7 @@ describe("<QuestionListItem />", () => {
     expect(answerItem).not.toBeInTheDocument();
 
     // Click the expand trigger button to display the answer
-    const expandAnswerTrigger = screen.getByText("Expand");
+    const expandAnswerTrigger = screen.getByLabelText("Collapse button");
 
     fireEvent.click(expandAnswerTrigger);
 
@@ -47,7 +47,7 @@ describe("<QuestionListItem />", () => {
     expect(questionItem).toBeInTheDocument();
 
     // Click the expand trigger button to display the answer
-    const deleteItemButton = screen.getByText("Delete");
+    const deleteItemButton = screen.getByLabelText("Delete button");
 
     userEvent.click(deleteItemButton);
 

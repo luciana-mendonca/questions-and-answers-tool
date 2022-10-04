@@ -1,3 +1,5 @@
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import {
@@ -6,6 +8,7 @@ import {
 } from "../../slices/questionAndAnswerSlice";
 import { QuestionAndAnswer } from "../../types";
 import { Button } from "../Button";
+import { Heading } from "../Heading";
 import { QuestionListItem } from "../QuestionListItem";
 
 const QuestionsList: React.FC<QuestionsListProps> = () => {
@@ -26,7 +29,8 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
     <div
       style={{ outline: "1px solid black", margin: "10px", padding: "10px" }}
     >
-      <h2>Created questions</h2>
+      <Heading headingLevel='h2'>Created questions</Heading>
+      <FontAwesomeIcon icon={faCircleInfo} />
       <Button type='button' onClick={deleteAllQuestionsAndAnswers}>
         Delete all questions
       </Button>
