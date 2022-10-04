@@ -1,3 +1,5 @@
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {
   Dispatch,
   HTMLAttributes,
@@ -5,6 +7,7 @@ import React, {
   SetStateAction,
 } from "react";
 import { Button } from "../Button";
+import { Heading } from "../Heading";
 import { Dialog, ModalHeader, ModalWrapper } from "./components";
 import Backdrop from "./components/Backdrop";
 
@@ -20,9 +23,9 @@ const Modal: React.FC<ModalProps> = ({
         <ModalWrapper>
           <ModalHeader>
             <div>
-              <h2>{modalTitle}</h2>
+              <Heading headingLevel='h2'>{modalTitle}</Heading>
+              <FontAwesomeIcon icon={faCircleInfo} />
             </div>
-
             <div>
               <Button
                 aria-label='Close button'

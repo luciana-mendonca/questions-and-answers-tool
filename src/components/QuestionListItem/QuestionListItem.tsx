@@ -7,6 +7,13 @@ import {
 import { QuestionAndAnswer } from "../../types";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronDown,
+  faChevronUp,
+  faPenToSquare,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const QuestionListItem: React.FC<QuestionListItemProps> = ({
   content,
@@ -73,14 +80,26 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
       <div style={{ display: "flex" }}>
         <span>{title}</span>
         <div style={{ marginLeft: "auto" }}>
-          <Button type='button' onClick={(): void => setModalOpen(!modalOpen)}>
-            Edit
+          <Button
+            aria-label='Edit button'
+            type='button'
+            onClick={(): void => setModalOpen(!modalOpen)}
+          >
+            <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
-          <Button type='button' onClick={deleteItem}>
-            Delete{" "}
+          <Button aria-label='Delete button' type='button' onClick={deleteItem}>
+            <FontAwesomeIcon icon={faXmark} />
           </Button>
-          <Button type='button' onClick={(): void => setExpanded(!expanded)}>
-            Expand
+          <Button
+            aria-label={expanded ? "Expand button" : "Collapse button"}
+            type='button'
+            onClick={(): void => setExpanded(!expanded)}
+          >
+            {expanded ? (
+              <FontAwesomeIcon icon={faChevronUp} />
+            ) : (
+              <FontAwesomeIcon icon={faChevronDown} />
+            )}
           </Button>
         </div>
       </div>
