@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Heading } from "../Heading";
 import { Tooltip } from "../Tooltip";
+import EmptyState from "./components/EmptyState";
 
 const QuestionList: React.FC<QuestionListProps> = () => {
   const [sortQuestions, setSortQuestions] = useState<boolean>(false);
@@ -72,6 +73,7 @@ const QuestionList: React.FC<QuestionListProps> = () => {
           />
         );
       })}
+      {!list.length && <EmptyState>No questions yet!</EmptyState>}
     </div>
   );
 };
