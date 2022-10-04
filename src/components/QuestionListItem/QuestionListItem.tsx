@@ -107,6 +107,7 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
       {modalOpen && (
         <Modal
           modalTitle='Edit question and answer'
+          modalTitleTooltipContent='Here you can edit the current question and its answer.'
           isOpen={modalOpen}
           setModalOpen={setModalOpen}
         >
