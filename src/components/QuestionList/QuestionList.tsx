@@ -1,17 +1,22 @@
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   clearList,
   selectQuestionsAndAnswers,
 } from "../../slices/questionAndAnswerSlice";
 import { QuestionAndAnswer } from "../../types";
 import { Button } from "../Button";
-import { Heading } from "../Heading";
 import { QuestionListItem } from "../QuestionListItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowDownZA,
+  faArrowUpAZ,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons";
+import { Heading } from "../Heading";
 
 const QuestionsList: React.FC<QuestionsListProps> = () => {
+  const [sortQuestions, setSortQuestions] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   // Get questions from the store
@@ -19,6 +24,13 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
     selectQuestionsAndAnswers,
     shallowEqual
   );
+
+  // Sort questions in alphabetical order
+  const sortedList = [...questionAndAnswerList].sort((a, b) =>
+    a.question.toLowerCase() > b.question.toLowerCase() ? 1 : -1
+  );
+
+  const list = !sortQuestions ? questionAndAnswerList : sortedList;
 
   // Delete all questions from local storage and remove from the view
   const deleteAllQuestionsAndAnswers = (): void => {
@@ -29,12 +41,25 @@ const QuestionsList: React.FC<QuestionsListProps> = () => {
     <div
       style={{ outline: "1px solid black", margin: "10px", padding: "10px" }}
     >
-      <Heading headingLevel='h2'>Created questions</Heading>
-      <FontAwesomeIcon icon={faCircleInfo} />
+      <div style={{ display: "flex" }}>
+        <Heading headingLevel='h2'>Created questions</Heading>
+        <FontAwesomeIcon icon={faCircleInfo} />
+      </div>
+      <Button
+        aria-label='Sort button alphabetically'
+        type='button'
+        onClick={(): void => setSortQuestions(!sortQuestions)}
+      >
+        {sortQuestions ? (
+          <FontAwesomeIcon icon={faArrowDownZA} />
+        ) : (
+          <FontAwesomeIcon icon={faArrowUpAZ} />
+        )}
+      </Button>
       <Button type='button' onClick={deleteAllQuestionsAndAnswers}>
         Delete all questions
       </Button>
-      {questionAndAnswerList?.map((item: QuestionAndAnswer) => {
+      {list?.map((item: QuestionAndAnswer) => {
         return (
           <QuestionListItem
             key={item.id}
