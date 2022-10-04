@@ -28,7 +28,7 @@ describe("<CreateQuestion />", () => {
       })
     );
 
-    const { list } = store.getState().questionsAndAnswers;
+    const { list } = store.getState();
 
     expect(list).toEqual([
       { id: "1", question: "What is your favorite animal?", answer: "Dog" },
