@@ -2,10 +2,10 @@ import React, { PropsWithChildren } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import { RootState, AppStore, setupStore } from "../app/store";
+import { AppStore, setupStore, RootStateTest } from "../app/store";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
-  preloadedState?: PreloadedState<RootState>;
+  preloadedState?: PreloadedState<RootStateTest>;
   store?: AppStore;
 }
 

@@ -19,8 +19,9 @@ export const questionAndAnswerSlice = createSlice({
   },
 });
 
-export const selectQuestionsAndAnswers = (state: RootState) =>
-  state.questionsAndAnswers.list;
+export const selectQuestionsAndAnswers = (
+  state: RootState
+): QuestionAndAnswer[] => state.list;
 
 export const { addQuestionAndAnswer } = questionAndAnswerSlice.actions;
 
