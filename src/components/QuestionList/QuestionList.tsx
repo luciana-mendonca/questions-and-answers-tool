@@ -16,6 +16,8 @@ import {
 import { Heading } from "../Heading";
 import { Tooltip } from "../Tooltip";
 import EmptyState from "./components/EmptyState";
+import QuestionListWrapper from "./components/QuestionListWrapper";
+import QuestionListHeader from "./components/QuestionListHeader";
 
 const QuestionList: React.FC<QuestionListProps> = () => {
   const [sortQuestions, setSortQuestions] = useState<boolean>(false);
@@ -40,29 +42,35 @@ const QuestionList: React.FC<QuestionListProps> = () => {
   };
 
   return (
-    <div
-      style={{ outline: "1px solid black", margin: "10px", padding: "10px" }}
-    >
-      <div style={{ display: "flex" }}>
+    <QuestionListWrapper>
+      <QuestionListHeader>
         <Heading headingLevel='h2'>Created questions</Heading>
         <Tooltip content='Here you can find the created questions and their answers.'>
-          <FontAwesomeIcon icon={faCircleInfo} />
+          <FontAwesomeIcon icon={faCircleInfo} focusable tabIndex={1} />
         </Tooltip>
-      </div>
-      <Button
-        aria-label='Sort button alphabetically'
-        type='button'
-        onClick={(): void => setSortQuestions(!sortQuestions)}
-      >
-        {sortQuestions ? (
-          <FontAwesomeIcon icon={faArrowDownZA} />
-        ) : (
-          <FontAwesomeIcon icon={faArrowUpAZ} />
-        )}
-      </Button>
-      <Button type='button' onClick={deleteAllQuestionsAndAnswers}>
-        Delete all questions
-      </Button>
+        <div>
+          <Button
+            aria-label='Sort button alphabetically'
+            variant='icon'
+            type='button'
+            onClick={(): void => setSortQuestions(!sortQuestions)}
+          >
+            {sortQuestions ? (
+              <FontAwesomeIcon icon={faArrowDownZA} />
+            ) : (
+              <FontAwesomeIcon icon={faArrowUpAZ} />
+            )}
+          </Button>
+          <Button
+            type='button'
+            variant='danger'
+            onClick={deleteAllQuestionsAndAnswers}
+          >
+            Delete all questions
+          </Button>
+        </div>
+      </QuestionListHeader>
+
       {list.map((item: QuestionAndAnswer) => {
         return (
           <QuestionListItem
@@ -74,7 +82,7 @@ const QuestionList: React.FC<QuestionListProps> = () => {
         );
       })}
       {!list.length && <EmptyState>No questions yet!</EmptyState>}
-    </div>
+    </QuestionListWrapper>
   );
 };
 

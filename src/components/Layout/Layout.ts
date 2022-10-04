@@ -8,7 +8,7 @@ const Layout = styled.div`
   justify-content: center;
   max-width: 100%;
   overflow: hidden;
-  padding: 30px;
+  padding: 60px;
 
   @media (min-width: 1024px) {
     flex-wrap: nowrap;
