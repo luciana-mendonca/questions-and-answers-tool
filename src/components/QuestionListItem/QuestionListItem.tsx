@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
+import {
+  deleteQuestionAndAnswer,
+  updateQuestionAndAnswer,
+} from "../../slices/questionAndAnswerSlice";
 import { QuestionAndAnswer } from "../../types";
 import { Button } from "../Button";
+import { Modal } from "../Modal";
 
 const QuestionListItem: React.FC<QuestionListItemProps> = ({
   content,
@@ -10,7 +14,40 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
   title,
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<{
+    question: string;
+    answer: string;
+  }>({
+    question: "",
+    answer: "",
+  });
   const dispatch = useDispatch();
+
+  // Edit previously created a question and answer
+  const handleUpdate = useCallback(
+    (event: React.FormEvent<HTMLFormElement>): void => {
+      event.preventDefault();
+
+      setInputValue({
+        question: inputValue.question,
+        answer: inputValue.answer,
+      });
+
+      // Trigger the state update
+      dispatch(
+        updateQuestionAndAnswer({
+          id: id,
+          question: inputValue.question,
+          answer: inputValue.answer,
+        })
+      );
+      // Clear the inputs and close the modal
+      setInputValue({ question: "", answer: "" });
+      setModalOpen(false);
+    },
+    [dispatch, id, inputValue.answer, inputValue.question]
+  );
 
   // Delete the current selected item of the question list
   const deleteItem = () => {
@@ -36,8 +73,11 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
       <div style={{ display: "flex" }}>
         <span>{title}</span>
         <div style={{ marginLeft: "auto" }}>
+          <Button type='button' onClick={(): void => setModalOpen(!modalOpen)}>
+            Edit
+          </Button>
           <Button type='button' onClick={deleteItem}>
-            Delete
+            Delete{" "}
           </Button>
           <Button type='button' onClick={(): void => setExpanded(!expanded)}>
             Expand
@@ -45,6 +85,50 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
         </div>
       </div>
       {expanded && <div>{content}</div>}
+      {modalOpen && (
+        <Modal
+          modalTitle='Edit question and answer'
+          isOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        >
+          <form onSubmit={(event): void => handleUpdate(event)}>
+            <label htmlFor='question-id'>Question</label>
+            <br />
+            <input
+              id='question-id'
+              type='text'
+              value={inputValue.question}
+              name='question'
+              onChange={(event) =>
+                setInputValue({
+                  question: event?.target.value,
+                  answer: inputValue.answer,
+                })
+              }
+              required
+            />
+            <br />
+            <br />
+            <label htmlFor='edited-answer-id'>Answer</label>
+            <br />
+            <textarea
+              id='edited-answer-id'
+              value={inputValue.answer}
+              name='answer'
+              onChange={(event) =>
+                setInputValue({
+                  question: inputValue.question,
+                  answer: event?.target.value,
+                })
+              }
+              required
+            />
+            <br />
+            <br />
+            <Button type='submit'>Submit</Button>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 };

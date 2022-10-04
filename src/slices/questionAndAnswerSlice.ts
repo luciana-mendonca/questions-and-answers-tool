@@ -27,6 +27,14 @@ export const questionAndAnswerSlice = createSlice({
     ) => {
       state.list = state.list.filter((item) => item.id !== action.payload.id);
     },
+    updateQuestionAndAnswer: (
+      state: QuestionAndAnswerState,
+      action: PayloadAction<QuestionAndAnswer>
+    ) => {
+      state.list = state.list.map((item) => {
+        return item.id === action.payload.id ? action.payload : item;
+      });
+    },
   },
 });
 
@@ -34,7 +42,11 @@ export const selectQuestionsAndAnswers = (
   state: RootState
 ): QuestionAndAnswer[] => state.list;
 
-export const { addQuestionAndAnswer, clearList, deleteQuestionAndAnswer } =
-  questionAndAnswerSlice.actions;
+export const {
+  addQuestionAndAnswer,
+  clearList,
+  deleteQuestionAndAnswer,
+  updateQuestionAndAnswer,
+} = questionAndAnswerSlice.actions;
 
 export default questionAndAnswerSlice.reducer;
