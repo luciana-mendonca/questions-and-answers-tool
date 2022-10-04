@@ -1,15 +1,10 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import App from "./App";
-import { Provider } from "react-redux";
-import { store } from "./app/store";
+import { renderWithProvider } from "./test-utils/testUtils";
 
 test("renders the App component without crashing", async () => {
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+  renderWithProvider(<App />);
 
   expect(screen.getByText("Q&A Tool")).toBeInTheDocument();
 });
