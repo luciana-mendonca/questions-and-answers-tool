@@ -10,6 +10,17 @@ const QuestionItemActionsWrapper = styled.div`
     flex-wrap: wrap;
     gap: 20px;
   }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 20px;
+
+    & > :last-child {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 export default QuestionItemActionsWrapper;

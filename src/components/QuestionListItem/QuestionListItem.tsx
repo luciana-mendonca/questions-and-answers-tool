@@ -17,6 +17,7 @@ import {
 import QuestionListItemWrapper from "./components/QuestionListItemWrapper";
 import { Heading } from "../Heading";
 import QuestionItemActionsWrapper from "./components/QuestionItemActionsWrapper";
+import { FormPanel, FormWrapper } from "../FormWrapper";
 
 const QuestionListItem: React.FC<QuestionListItemProps> = ({
   content,
@@ -113,42 +114,45 @@ const QuestionListItem: React.FC<QuestionListItemProps> = ({
           isOpen={modalOpen}
           setModalOpen={setModalOpen}
         >
-          <form onSubmit={(event): void => handleUpdate(event)}>
-            <label htmlFor='question-id'>Question</label>
-            <br />
-            <input
-              id='question-id'
-              type='text'
-              value={inputValue.question}
-              name='question'
-              onChange={(event) =>
-                setInputValue({
-                  question: event?.target.value,
-                  answer: inputValue.answer,
-                })
-              }
-              required
-            />
-            <br />
-            <br />
-            <label htmlFor='edited-answer-id'>Answer</label>
-            <br />
-            <textarea
-              id='edited-answer-id'
-              value={inputValue.answer}
-              name='answer'
-              onChange={(event) =>
-                setInputValue({
-                  question: inputValue.question,
-                  answer: event?.target.value,
-                })
-              }
-              required
-            />
-            <br />
-            <br />
-            <Button type='submit'>Submit</Button>
-          </form>
+          <FormWrapper>
+            <form onSubmit={(event): void => handleUpdate(event)}>
+              <FormPanel>
+                <label htmlFor='question-id'>Question</label>
+                <input
+                  id='question-id'
+                  type='text'
+                  value={inputValue.question}
+                  name='question'
+                  autoComplete='off'
+                  onChange={(event) =>
+                    setInputValue({
+                      question: event?.target.value,
+                      answer: inputValue.answer,
+                    })
+                  }
+                  required
+                />
+                <p>*required</p>
+              </FormPanel>
+              <FormPanel>
+                <label htmlFor='edited-answer-id'>Answer</label>
+                <textarea
+                  id='edited-answer-id'
+                  value={inputValue.answer}
+                  name='answer'
+                  onChange={(event) =>
+                    setInputValue({
+                      question: inputValue.question,
+                      answer: event?.target.value,
+                    })
+                  }
+                  required
+                />
+                <p>*required</p>
+              </FormPanel>
+              <Button type='submit'>Submit</Button>
+            </form>
+          </FormWrapper>
         </Modal>
       )}
     </QuestionListItemWrapper>

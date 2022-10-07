@@ -4,6 +4,7 @@ import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { v4 as uuid } from "uuid";
 import { addQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
+import { FormPanel, FormWrapper } from "../FormWrapper";
 
 const CreateQuestion: React.FC<CreateQuestionProps> = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -46,44 +47,45 @@ const CreateQuestion: React.FC<CreateQuestionProps> = () => {
           isOpen={modalOpen}
           setModalOpen={() => setModalOpen(!modalOpen)}
         >
-          <div style={{ margin: "40px" }}>
+          <FormWrapper>
             <form onSubmit={handleSubmit}>
-              <label htmlFor='question-id'>Question</label>
-              <br />
-              <input
-                id='question-id'
-                type='text'
-                value={inputValue.question}
-                name='question'
-                onChange={(event) =>
-                  setInputValue({
-                    question: event?.target.value,
-                    answer: inputValue.answer,
-                  })
-                }
-                required
-              />
-              <br />
-              <br />
-              <label htmlFor='answer-id'>Answer</label>
-              <br />
-              <textarea
-                id='answer-id'
-                value={inputValue.answer}
-                name='answer'
-                onChange={(event) =>
-                  setInputValue({
-                    question: inputValue.question,
-                    answer: event?.target.value,
-                  })
-                }
-                required
-              />
-              <br />
-              <br />
+              <FormPanel>
+                <label htmlFor='question-id'>Question</label>
+                <input
+                  id='question-id'
+                  type='text'
+                  value={inputValue.question}
+                  name='question'
+                  autoComplete='off'
+                  onChange={(event) =>
+                    setInputValue({
+                      question: event?.target.value,
+                      answer: inputValue.answer,
+                    })
+                  }
+                  required
+                />
+                <p>*required</p>
+              </FormPanel>
+              <FormPanel>
+                <label htmlFor='answer-id'>Answer</label>
+                <textarea
+                  id='answer-id'
+                  value={inputValue.answer}
+                  name='answer'
+                  onChange={(event) =>
+                    setInputValue({
+                      question: inputValue.question,
+                      answer: event?.target.value,
+                    })
+                  }
+                  required
+                />
+                <p>*required</p>
+              </FormPanel>
               <Button type='submit'>Submit</Button>
             </form>
-          </div>
+          </FormWrapper>
         </Modal>
       )}
     </>

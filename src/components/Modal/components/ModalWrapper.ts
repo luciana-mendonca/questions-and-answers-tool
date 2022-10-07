@@ -10,7 +10,6 @@ const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
-  // width: 33%;
   z-index: 6000;
 `;
 
