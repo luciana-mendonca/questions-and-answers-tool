@@ -6,8 +6,10 @@ import { v4 as uuid } from "uuid";
 import { addQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
 import { FormPanel, FormWrapper } from "../FormWrapper";
 import { CheckboxContainer } from "../FormWrapper/FormWrapper";
+import { LoadingSpinner } from "../LoadingSpinner";
 
 const CreateQuestion: React.FC<CreateQuestionProps> = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [isChecked, setChecked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<{
@@ -37,13 +39,15 @@ const CreateQuestion: React.FC<CreateQuestionProps> = () => {
 
       if (isChecked) {
         // Simulate a server latency of 5 seconds
+        setIsLoading(true);
+
         setTimeout(() => {
+          setIsLoading(false);
           return dispatchData();
         }, 5000);
       } else {
         dispatchData();
       }
-
       // Clear the form after submit and close the modal
       setInputValue({ question: "", answer: "" });
       setChecked(false);
@@ -54,6 +58,7 @@ const CreateQuestion: React.FC<CreateQuestionProps> = () => {
 
   return (
     <>
+      {isLoading && <LoadingSpinner />}
       <Button type='button' onClick={(): void => setModalOpen(!modalOpen)}>
         Create question
       </Button>
