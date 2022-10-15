@@ -7,13 +7,6 @@ const FormWrapper = styled.div`
   gap: 30px;
   justify-content: space-evenly;
   padding: 10px;
-`;
-
-const FormPanel = styled.div`
-  background-color: #ffffff;
-  border-radius: 5px;
-  max-width: 800px;
-  padding: 10px 0;
 
   p {
     color: #b81414;
@@ -39,15 +32,32 @@ const FormPanel = styled.div`
       outline: 2px solid #2f3e4e;
     }
   }
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
 
   textarea {
     height: 60px;
     resize: none;
   }
 `;
-export { FormWrapper, FormPanel };
+
+const FormPanel = styled.div`
+  max-width: 800px;
+  padding: 10px 0;
+`;
+
+const CheckboxContainer = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  label {
+    font-weight: 500;
+  }
+
+  input {
+    accent-color: #2f3e4e;
+    height: 16px;
+    width: 16px;
+`;
+
+export { FormWrapper, FormPanel, CheckboxContainer };
