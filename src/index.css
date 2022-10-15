@@ -13,7 +13,7 @@ body {
   font-family: "DM Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: "#2F3E4E";
+  color: #2f3e4e;
   height: 100%;
 }
 
@@ -22,6 +22,7 @@ button,
 textarea,
 select {
   font: inherit;
+  color: #2f3e4e;
 }
 
 p,

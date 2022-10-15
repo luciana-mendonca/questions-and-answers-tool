@@ -5,9 +5,11 @@ import { Modal } from "../Modal";
 import { v4 as uuid } from "uuid";
 import { addQuestionAndAnswer } from "../../slices/questionAndAnswerSlice";
 import { FormPanel, FormWrapper } from "../FormWrapper";
+import { CheckboxContainer } from "../FormWrapper/FormWrapper";
 
 const CreateQuestion: React.FC<CreateQuestionProps> = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [isChecked, setChecked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<{
     question: string;
     answer: string;
@@ -17,22 +19,37 @@ const CreateQuestion: React.FC<CreateQuestionProps> = () => {
   });
   const dispatch = useDispatch();
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>): void => {
-      event.preventDefault();
-
+  const dispatchData = useCallback(
+    () =>
       dispatch(
         addQuestionAndAnswer({
           id: uuid(),
           question: inputValue.question,
           answer: inputValue.answer,
         })
-      );
+      ),
+    [dispatch, inputValue.answer, inputValue.question]
+  );
+
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>): void => {
+      event.preventDefault();
+
+      if (isChecked) {
+        // Simulate a server latency of 5 seconds
+        setTimeout(() => {
+          return dispatchData();
+        }, 5000);
+      } else {
+        dispatchData();
+      }
+
       // Clear the form after submit and close the modal
       setInputValue({ question: "", answer: "" });
+      setChecked(false);
       setModalOpen(false);
     },
-    [dispatch, inputValue.answer, inputValue.question]
+    [dispatchData, isChecked]
   );
 
   return (
@@ -83,6 +100,17 @@ const CreateQuestion: React.FC<CreateQuestionProps> = () => {
                 />
                 <p>*required</p>
               </FormPanel>
+              <CheckboxContainer>
+                <input
+                  id='delay'
+                  type='checkbox'
+                  checked={isChecked}
+                  value='delayed'
+                  name='delay'
+                  onChange={(): void => setChecked(!isChecked)}
+                />
+                <label htmlFor='delay'>Delay form submit</label>
+              </CheckboxContainer>
               <Button type='submit'>Submit</Button>
             </form>
           </FormWrapper>
