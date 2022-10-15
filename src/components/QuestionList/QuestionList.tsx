@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   clearList,
@@ -20,21 +20,34 @@ import QuestionListWrapper from "./components/QuestionListWrapper";
 import QuestionListHeader from "./components/QuestionListHeader";
 
 const QuestionList: React.FC<QuestionListProps> = () => {
-  const [sortQuestions, setSortQuestions] = useState<boolean>(false);
+  const [list, setList] = useState<QuestionAndAnswer[]>([]);
+  const [sortAscending, setSortAscending] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   // Get questions from the store
-  const questionAndAnswerList = useSelector(
-    selectQuestionsAndAnswers,
-    shallowEqual
-  );
+  const unsortedList = useSelector(selectQuestionsAndAnswers, shallowEqual);
+
+  useEffect(() => {
+    setList(unsortedList);
+  }, [unsortedList]);
 
   // Sort questions in alphabetical order
-  const sortedList = [...questionAndAnswerList].sort((a, b) =>
-    a.question.toLowerCase() > b.question.toLowerCase() ? 1 : -1
-  );
+  const handleSort = useCallback(() => {
+    setSortAscending(!sortAscending);
 
-  const list = !sortQuestions ? questionAndAnswerList : sortedList;
+    const sortedList = [...unsortedList].sort((a, b) => {
+      const questionA = a.question.toLowerCase();
+      const questionB = b.question.toLowerCase();
+
+      if (sortAscending) {
+        return questionA > questionB ? 1 : -1;
+      } else {
+        return questionA < questionB ? 1 : -1;
+      }
+    });
+
+    setList(sortedList);
+  }, [sortAscending, unsortedList]);
 
   // Delete all questions from local storage and remove from the view
   const deleteAllQuestionsAndAnswers = (): void => {
@@ -53,9 +66,9 @@ const QuestionList: React.FC<QuestionListProps> = () => {
             aria-label='Sort button alphabetically'
             variant='icon'
             type='button'
-            onClick={(): void => setSortQuestions(!sortQuestions)}
+            onClick={handleSort}
           >
-            {sortQuestions ? (
+            {sortAscending ? (
               <FontAwesomeIcon icon={faArrowDownZA} />
             ) : (
               <FontAwesomeIcon icon={faArrowUpAZ} />
@@ -70,7 +83,6 @@ const QuestionList: React.FC<QuestionListProps> = () => {
           </Button>
         </div>
       </QuestionListHeader>
-
       {list.map((item: QuestionAndAnswer) => {
         return (
           <QuestionListItem
